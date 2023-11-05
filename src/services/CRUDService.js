@@ -49,7 +49,40 @@ let getAllUser = () => {
     })
 }
 
+let getUserInfoById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId },
+                raw: true,
+            });
+            if (user) {
+                resolve(user);
+            } else {
+                resolve({});
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let deleteUserById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        let user = await db.User.findOne({
+            where: { id: userId }
+        })
+        if (!user) {
+            reject(`Cannot find user`);
+        }
+        await user.destroy();
+        resolve('ok');
+    })
+}
+
 module.exports = {
     createNewUser: createNewUser,
     getAllUser: getAllUser,
+    getUserInfoById: getUserInfoById,
+    deleteUserById: deleteUserById,
 }

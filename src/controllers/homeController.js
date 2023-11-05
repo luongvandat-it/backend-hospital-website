@@ -27,13 +27,17 @@ let getAboutPage = (req, res) => {
     return res.render('test/about.ejs');
 }
 
-// object: {
-//     key: '',
-//     value: ''
-// }
+let displayGetCRUD = async (req, res) => {
+    let data = await CRUDService.getAllUser();
+    return res.render('displayCRUD.ejs', {
+        dataTable: data
+    });
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
     getCRUD: getCRUD,
-    postCRUD: postCRUD
+    postCRUD: postCRUD,
+    displayGetCRUD: displayGetCRUD,
 }
